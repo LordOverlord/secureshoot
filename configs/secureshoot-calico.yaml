@@ -4,26 +4,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: kube-system
-  name: netshoot-calico-deploy
+  name: secureshoot-calico-deploy
   labels:
-    app: netshoot-calico
+    app: secureshoot-calico
 spec:
   selector:
     matchLabels:
-      app: netshoot
+      app: secureshoot
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: netshoot
+        app: secureshoot
     spec:
       serviceAccount: cni-plugin
       serviceAccountName: cni-plugin
       hostNetwork: true
       containers:
-      - image: nicolaka/netshoot
-        name: netshoot
+      - image: lordoverlord/secureshoot
+        name: secureshoot
         command: ["ping","localhost"]
         volumeMounts:
         - mountPath: /calico-secrets

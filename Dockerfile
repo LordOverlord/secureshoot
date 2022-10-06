@@ -14,28 +14,26 @@ RUN set -ex && \
     apk update && \
     apk upgrade && \
     apk add --no-cache \
-    bash && \ 
-    bind-tools && \
-    busybox && \
-    curl && \
-    drill && \
-    file && \
-    iftop && \
-    iperf3 && \
-    jq && \
-    mtr && \
-    openssl && \
-    py3-pip && \
-    py3-setuptools && \ 
-    speedtest-cli && \
-    openssh && \
-    tcptraceroute && \
-    util-linux && \
-    vim && \
-    git && \
-    zsh && \
-    ping && \
-    ping6 && \
+    bash \ 
+    bind-tools \
+    busybox \
+    curl \
+    drill \
+    file \
+    iftop \
+    iperf3 \
+    jq \
+    mtr \
+    openssl \
+    py3-pip \
+    py3-setuptools \ 
+    speedtest-cli \
+    openssh \
+    tcptraceroute \
+    util-linux \
+    vim \
+    git \
+    zsh \
     traceroute
 
 # Install ctop
