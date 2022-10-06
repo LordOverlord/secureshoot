@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: nginx-netshoot
+    name: nginx-secureshoot
     labels:
-        app: nginx-netshoot
+        app: nginx-secureshoot
 spec:
  replicas: 1
  selector:
     matchLabels:
-        app: nginx-netshoot
+        app: nginx-secureshoot
  template:
     metadata:
      labels:
-        app: nginx-netshoot
+        app: nginx-secureshoot
     spec:
         containers:
         - name: nginx
           image: nginx:1.14.2
           ports:
             - containerPort: 80
-        - name: netshoot
-          image: nicolaka/netshoot
+        - name: secureshoot
+          image: lordoverlord/secureshoot
           command: ["/bin/bash"]
           args: ["-c", "while true; do ping localhost; sleep 60;done"]
