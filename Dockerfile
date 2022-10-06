@@ -1,7 +1,7 @@
 FROM debian:stable-slim as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
 
-RUN apt-get update && apt-get install -y curl && \
+RUN apt-get update && apt-get install -y curl wget && \
     chmod +x /tmp/fetch_binaries.sh && \ 
     /tmp/fetch_binaries.sh
 

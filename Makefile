@@ -1,7 +1,7 @@
 .PHONY: build-x86 build-arm64 push all
 
 # Build Vars
-IMAGENAME=LordOverlord/secureshoot
+IMAGENAME=lordoverlord/secureshoot
 VERSION=0.1
 
 
