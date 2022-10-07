@@ -74,8 +74,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-# User configuration
 cat motd
+# User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
