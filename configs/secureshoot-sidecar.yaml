@@ -17,9 +17,19 @@ spec:
         containers:
         - name: nginx
           image: nginx:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
         - name: secureshoot
           image: lordoverlord/secureshoot
+          imagePullPolicy: Always
           command: ["/bin/bash"]
           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
