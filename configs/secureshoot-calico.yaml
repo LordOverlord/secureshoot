@@ -23,8 +23,13 @@ spec:
       hostNetwork: true
       containers:
       - image: lordoverlord/secureshoot
+        imagePullPolicy: Always
         name: secureshoot
         command: ["ping","localhost"]
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /calico-secrets
           name: etcd-certs
