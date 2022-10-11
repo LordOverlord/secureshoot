@@ -24,6 +24,7 @@ RUN set -ex && \
     iperf3 \
     jq \
     mtr \
+    openjdk11 \
     openssl \
     py3-pip \
     py3-setuptools \ 
@@ -40,6 +41,10 @@ RUN set -ex && \
 COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
 # Install calicoctl
 COPY --from=fetcher /tmp/calicoctl /usr/local/bin/calicoctl
+# Install kafka
+COPY --from=fetcher /tmp/kafka /usr/local/bin/kafka
+# Install Confluent CLI
+RUN curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && mv -v ./bin/confluent /usr/local/bin/confluent
 
 # ZSH config
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true

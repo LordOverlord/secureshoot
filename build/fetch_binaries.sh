@@ -33,5 +33,12 @@ get_calicoctl() {
   LINK="https://github.com/projectcalico/calicoctl/releases/download/${VERSION}/calicoctl-linux-${ARCH}"
   wget "$LINK" -O /tmp/calicoctl && chmod +x /tmp/calicoctl
 }
+get_kafka() {
+  LINK="https://downloads.apache.org/kafka/3.2.3/kafka_2.13-3.2.3.tgz"
+  wget "$LINK" -O /tmp/kafka.tar.gz
+  mkdir -p /tmp/kafka
+  tar -xzf /tmp/kafka.tar.gz -C /tmp/kafka --strip-components 1
+}
 get_ctop
 get_calicoctl
+get_kafka
