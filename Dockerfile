@@ -1,10 +1,17 @@
-FROM debian:stable-slim as fetcher
+#FROM debian:stable-slim as fetcher
+#COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
+#RUN apt-get update && apt-get install -y curl wget && \
+#    chmod +x /tmp/fetch_binaries.sh && \ 
+#    /tmp/fetch_binaries.sh
+FROM alpine:3.16.12 as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
-RUN apt-get update && apt-get install -y curl wget && \
+RUN apk add --no-cache curl wget tar mv && \
     chmod +x /tmp/fetch_binaries.sh && \ 
     /tmp/fetch_binaries.sh
-
 FROM alpine:3.16.2
+# Install all the things
+COPY --from=fetcher /tmp/ /usr/local/bin
+COPY copy-files/ ~/
 RUN set -ex && \
     apk add --no-cache ca-certificates && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
@@ -26,13 +33,10 @@ RUN set -ex && \
     openssh \
     tcptraceroute \
     util-linux \
-    vim \
     git \
     htop && \
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-# Install all the things
-COPY --from=fetcher /tmp/* /usr/local/bin
-COPY copy-files/* ~/
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
+    chmod +x /usr/local/bin/kafka/bin/*.sh
 # Install ctop
 #COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
 # Install calicoctl

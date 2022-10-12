@@ -17,15 +17,15 @@ esac
 #Get latest version
 get_latest_release() {
   curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
-    grep '"tag_name":' |                                            # Get tag line
-    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+  grep '"tag_name":' |                                            # Get tag line
+  sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
 }
 #Get ctop function
 get_ctop() {
-    echo "Getting ctop"
-    VERSION=$(get_latest_release bcicen/ctop | sed -e 's/^v//')
-    LINK="https://github.com/bcicen/ctop/releases/download/v${VERSION}/ctop-${VERSION}-linux-${ARCH}"
-    wget "$LINK" -O /tmp/ctop && chmod +x /tmp/ctop
+  echo "Getting ctop"
+  VERSION=$(get_latest_release bcicen/ctop | sed -e 's/^v//')
+  LINK="https://github.com/bcicen/ctop/releases/download/v${VERSION}/ctop-${VERSION}-linux-${ARCH}"
+  wget "$LINK" -O /tmp/ctop && chmod +x /tmp/ctop
 }
 #Get calicoctl function
 get_calicoctl() {
