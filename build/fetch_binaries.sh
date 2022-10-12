@@ -58,11 +58,6 @@ get_netty() {
   wget "$LINK" -O /tmp/netty-handler-4.1.82.Final.jar
   mv /tmp/netty-handler-4.1.82.Final.jar /tmp/kafka/libs/
 }
-get_confluent() {
-  mkdir -p /tmp/confluent && cd /tmp/confluent
-  curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0
-  cd -
-}
 get_ctop
 get_calicoctl
 get_kafka

@@ -4,10 +4,10 @@
 #    chmod +x /tmp/fetch_binaries.sh && \ 
 #    /tmp/fetch_binaries.sh
 FROM alpine:3.16.2 as fetcher
-COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
+COPY build/fetch_binaries.sh fetch_binaries.sh
 RUN apk add --no-cache curl wget tar bash && \
-    chmod +x /tmp/fetch_binaries.sh && \ 
-    /tmp/fetch_binaries.sh
+    chmod +x fetch_binaries.sh && \ 
+    fetch_binaries.sh
 FROM alpine:3.16.2
 # Install all the things
 COPY --from=fetcher /tmp/ /usr/local/bin
@@ -35,7 +35,8 @@ RUN set -ex && \
     git \
     htop && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
-    chmod +x /usr/local/bin/kafka/bin/*.sh
+    chmod +x /usr/local/bin/kafka/bin/*.sh && \
+    curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && mv -v ./bin/confluent /usr/local/bin/confluent
 # Install ctop
 #COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
 # Install calicoctl
