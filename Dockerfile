@@ -1,8 +1,3 @@
-#FROM debian:stable-slim as fetcher
-#COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
-#RUN apt-get update && apt-get install -y curl wget && \
-#    chmod +x /tmp/fetch_binaries.sh && \ 
-#    /tmp/fetch_binaries.sh
 FROM alpine:3.16.2 as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
 RUN apk add --no-cache curl wget tar bash && \
@@ -38,13 +33,5 @@ RUN set -ex && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     chmod +x /usr/local/bin/kafka/bin/*.sh && \
     curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && mv -v ./bin/confluent /usr/local/bin/confluent
-# Install ctop
-#COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
-# Install calicoctl
-#COPY --from=fetcher /tmp/calicoctl /usr/local/bin/calicoctl
-# Install kafka
-#COPY --from=fetcher /tmp/kafka /usr/local/bin/kafka
-# Install Confluent CLI
-#RUN curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && mv -v ./bin/confluent /usr/local/bin/confluent
 # Run bash
 CMD ["bash"]
