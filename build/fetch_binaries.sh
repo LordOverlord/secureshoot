@@ -46,3 +46,4 @@ get_jackson() {
 get_ctop
 get_calicoctl
 get_kafka
+get_jackson
