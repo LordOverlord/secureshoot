@@ -9,14 +9,12 @@ FROM alpine:3.16.2
 
 RUN set -ex && \
     apk add --no-cache ca-certificates && \
-    update-ca-certificates && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     apk update && \
     apk upgrade && \
     apk add --no-cache \
     bash \ 
-    bind-tools \
-    busybox \
+    busybox-extras \
     curl \
     drill \
     file \
@@ -26,18 +24,14 @@ RUN set -ex && \
     mtr \
     openjdk11 \
     openssl \
-    py3-pip \
-    py3-setuptools \ 
     speedtest-cli \
     openssh \
     tcptraceroute \
     util-linux \
     vim \
     git \
-    zsh \
-    nc \
-    telnet \
-    traceroute
+    htop \
+    zsh
 # Install ctop
 COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
 # Install calicoctl
