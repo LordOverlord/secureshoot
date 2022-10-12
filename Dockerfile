@@ -5,7 +5,7 @@
 #    /tmp/fetch_binaries.sh
 FROM alpine:3.16.2 as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
-RUN apk add --no-cache curl wget tar mv && \
+RUN apk add --no-cache curl wget tar && \
     chmod +x /tmp/fetch_binaries.sh && \ 
     /tmp/fetch_binaries.sh
 FROM alpine:3.16.2
