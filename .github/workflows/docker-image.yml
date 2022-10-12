@@ -18,7 +18,7 @@ jobs:
       packages: write
       
     steps:
-      - name: Checkout repositoru
+      - name: Checkout repository
         uses: actions/checkout@v3 
     
       - name: Log in to the Container registry
