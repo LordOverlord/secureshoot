@@ -41,7 +41,7 @@ get_kafka() {
 }
 get_jackson() {
   LINK="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.14.0-rc2/jackson-databind-2.14.0-rc2.jar"
-  wget "$LINK" -O /tmp/jackson-databind-2.12.3.jar
+  wget "$LINK" -O /tmp/jackson-databind-2.14.0-rc2.jar
 }
 get_ctop
 get_calicoctl
