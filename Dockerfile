@@ -3,7 +3,7 @@
 #RUN apt-get update && apt-get install -y curl wget && \
 #    chmod +x /tmp/fetch_binaries.sh && \ 
 #    /tmp/fetch_binaries.sh
-FROM alpine:3.16.12 as fetcher
+FROM alpine:3.16.2 as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
 RUN apk add --no-cache curl wget tar mv && \
     chmod +x /tmp/fetch_binaries.sh && \ 
@@ -32,7 +32,6 @@ RUN set -ex && \
     speedtest-cli \
     openssh \
     tcptraceroute \
-    util-linux \
     git \
     htop && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
