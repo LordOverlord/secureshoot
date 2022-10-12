@@ -34,7 +34,7 @@ get_calicoctl() {
   wget "$LINK" -O /tmp/calicoctl && chmod +x /tmp/calicoctl
 }
 get_kafka() {
-  LINK="https://downloads.apache.org/kafka/3.2.3/kafka_2.13-3.2.3.tgz"
+  LINK="https://downloads.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz"
   wget "$LINK" -O /tmp/kafka.tar.gz
   mkdir -p /tmp/kafka
   tar -xzf /tmp/kafka.tar.gz -C /tmp/kafka --strip-components 1
