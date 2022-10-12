@@ -35,8 +35,9 @@ RUN set -ex && \
     vim \
     git \
     zsh \
+    nc \
+    telnet \
     traceroute
-
 # Install ctop
 COPY --from=fetcher /tmp/ctop /usr/local/bin/ctop
 # Install calicoctl
@@ -45,16 +46,11 @@ COPY --from=fetcher /tmp/calicoctl /usr/local/bin/calicoctl
 COPY --from=fetcher /tmp/kafka /usr/local/bin/kafka
 # Install Confluent CLI
 RUN curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && mv -v ./bin/confluent /usr/local/bin/confluent
-# Remove and copy new version of jackson
-RUN rm /usr/local/bin/kafka/jackson-databind-2.13.3.jar
-COPY --from=fetcher /tmp/jackson-databind-2.14.0-rc2.jar /usr/local/bin/kafka/jackson-databind-2.14.0-rc2.jar
 # ZSH config
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 COPY zshrc .zshrc
-
 #Copy motd
 COPY motd motd
-
 # Run zsh
 CMD ["zsh"]
