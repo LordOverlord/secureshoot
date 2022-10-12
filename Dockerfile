@@ -15,7 +15,7 @@ RUN set -ex && \
     apk upgrade && \
     apk add --no-cache \
     bash \ 
-    busybox-extras \
+    busybox \
     curl \
     drill \
     file \
