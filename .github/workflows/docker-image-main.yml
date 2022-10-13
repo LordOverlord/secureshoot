@@ -39,7 +39,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: user/app:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       
       - name: Search latest image
         uses: tinact/docker.image-retag@1.0.3
