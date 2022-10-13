@@ -48,6 +48,6 @@ jobs:
           image_name: ${{ env.IMAGE_NAME }}
           image_old_tag: main
           image_new_tag: latest
-          registry: docker.pkg.github.com/${{ env.IMAGE_NAME }}
+          registry: docker.pkg.github.com
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
