@@ -33,6 +33,6 @@ RUN set -ex && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     chmod +x /usr/local/bin/kafka/bin/*.sh && \
     curl -sL --http1.1 https://cnfl.io/cli | sh -s -- v2.23.0 && \
-    mv -v /bin/confluent /usr/local/bin/confluent
+    mv -v bin/confluent /usr/local/bin/confluent
 # Run bash
 CMD ["bash"]
