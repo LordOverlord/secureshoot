@@ -26,7 +26,7 @@ get_ctop() {
   VERSION=$(get_latest_release bcicen/ctop | sed -e 's/^v//')
   LINK="https://github.com/bcicen/ctop/releases/download/v${VERSION}/ctop-${VERSION}-linux-${ARCH}"
   wget "$LINK" -O /tmp/ctop && chmod +x /tmp/ctop
-  sudo mv /tmp/ctop /usr/local/bin/ctop
+  mv /tmp/ctop /usr/local/bin/ctop
   echo "Ctop downloaded"
 }
 #Get calicoctl function
@@ -34,7 +34,7 @@ get_calicoctl() {
   VERSION=$(get_latest_release projectcalico/calicoctl)
   LINK="https://github.com/projectcalico/calicoctl/releases/download/${VERSION}/calicoctl-linux-${ARCH}"
   wget "$LINK" -O /tmp/calicoctl && chmod +x /tmp/calicoctl
-  sudo move /tmp/calicoctl /usr/local/bin/calicoctl
+  move /tmp/calicoctl /usr/local/bin/calicoctl
   echo "Calicoctl downloaded"
 }
 get_ctop

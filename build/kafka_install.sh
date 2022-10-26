@@ -32,10 +32,10 @@ get_netty() {
 }
 add_kafka() {
   echo "Adding Kafka"
-  sudo mv /tmp/kafka/* /usr/local/bin/kafka
-  sudo chown -R root:root /usr/local/bin/kafka
-  sudo chmod -R 755 /usr/local/bin/kafka
-  sudo chmod +x /usr/local/bin/kafka/bin/*.sh
+  mv /tmp/kafka/* /usr/local/bin/kafka
+  chown -R root:root /usr/local/bin/kafka
+  chmod -R 755 /usr/local/bin/kafka
+  chmod +x /usr/local/bin/kafka/bin/*.sh
   echo "Kafka added"
 }
 # Install Kafka
