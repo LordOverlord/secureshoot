@@ -7,6 +7,7 @@ OSH_THEME="n0qorg"
 source $OSH/oh-my-bash.sh
 alias kafka-install='. tmp/kafka_install.sh'
 alias ufetch='. tmp/ufetch.sh'
+ufetch
 echo "Welcome to the SecureShoot Docker container!"
 echo "This container is based on Alpine Linux."
 echo "To install Kafka, run 'kafka-install'."
