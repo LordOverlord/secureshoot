@@ -1,10 +1,10 @@
-name: Image build Main
+name: Image build dev
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
