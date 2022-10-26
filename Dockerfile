@@ -28,6 +28,7 @@ RUN set -ex && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
     rm /tmp/install_confluent.sh && \
-    mv /tmp/.bashrc .bashrc
+    mv /tmp/.bashrc .bashrc && \
+    source .bashrc
 # Run bash
 CMD ["bash"]
