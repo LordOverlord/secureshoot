@@ -31,6 +31,10 @@ Cool thing about namespaces is that you can switch between them. You can enter a
 
 * **Network's Network Namespace:** If you want to troubleshoot a Docker network, you can enter the network's namespace using `nsenter`. This is explained in the `nsenter` section below.
 
+* **Vanilla Docker usage:** If you wanna use it in docker desktop
+
+    `$ docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro -it ghcr.io/lordoverlord/secureshoot:main`
+
 ## SecureShoot with Docker Compose
 
 You can easily deploy `secureshoot` using Docker Compose using something like this:

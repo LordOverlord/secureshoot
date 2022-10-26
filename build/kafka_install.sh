@@ -32,7 +32,7 @@ get_netty() {
 }
 add_kafka() {
   echo "Adding Kafka"
-  mv /tmp/kafka/* /usr/local/bin/kafka
+  mv kafka/* /usr/local/bin/kafka
   chown -R root:root /usr/local/bin/kafka
   chmod -R 755 /usr/local/bin/kafka
   chmod +x /usr/local/bin/kafka/bin/*.sh

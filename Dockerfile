@@ -10,6 +10,7 @@ RUN set -ex && \
     busybox-extras \
     curl \
     drill \
+    dig \
     file \
     iftop \
     iperf3 \
@@ -18,7 +19,6 @@ RUN set -ex && \
     openssl \
     speedtest-cli \
     openssh \
-    tcptraceroute \
     git \
     htop && \
     # Install oh my bash
@@ -29,6 +29,6 @@ RUN set -ex && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
     rm /tmp/install_confluent.sh && \
-    alias install-kafka=/tmp/install_kafka.sh
+    alias install-kafka='bash /tmp/install_kafka.sh'
 # Run bash
-CMD ["bash"]
+# CMD ["bash"]
