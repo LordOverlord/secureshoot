@@ -19,7 +19,7 @@ RUN set -ex && \
     speedtest-cli \
     openssh \
     git \
-    neofetch \
+    nano \
     htop && \
     # Install oh my bash
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
