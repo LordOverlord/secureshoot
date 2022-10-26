@@ -10,6 +10,11 @@ get_kafka() {
   rm /tmp/kafka/libs/jackson-databind-2.13.3.jar
   rm /tmp/kafka/libs/scala-library-2.13.8.jar
   rm /tmp/kafka/libs/netty-handler-4.1.78.Final.jar
+  rm /tmp/kafka/LICENSE
+  rm /tmp/kafka/NOTICE
+  rm -rf /tmp/kafka/licenses
+  rm -rf /tmp/kafka/site-docs
+  rm -rf /tmp/kafka/bin/windows
   echo "Kafka downloaded"
 }
 get_jackson() {
@@ -32,10 +37,11 @@ get_netty() {
 }
 add_kafka() {
   echo "Adding Kafka"
-  mv tmp/kafka /usr/bin/kafka
-  chown -R root:root /usr/bin/kafka
-  chmod -R 755 /usr/bin/kafka
-  chmod +x /usr/bin/kafka/bin/*.sh
+  mkdir /usr/local/bin/kafka
+  mv tmp/kafka/bin /usr/local/bin/kafka
+  chown -R root:root /usr/local/bin/kafka
+  chmod -R 755 /usr/local/bin/kafka
+  chmod +x /usr/local/bin/kafka/bin/*.sh
   echo "Kafka added"
 }
 # Install Kafka
