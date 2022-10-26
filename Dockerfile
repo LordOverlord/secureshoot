@@ -28,6 +28,6 @@ RUN set -ex && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
     rm /tmp/install_confluent.sh && \
-    alias install-kafka='bash /tmp/install_kafka.sh'
+    alias install-kafka='bash /tmp/kafka_install.sh'
 # Run bash
-# CMD ["bash"]
+CMD ["bash"]
