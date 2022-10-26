@@ -5,3 +5,4 @@ export OSH=~/.oh-my-bash
 OSH_THEME="n0qorg"
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
 source $OSH/oh-my-bash.sh
+alias kafka-install='. tmp/kafka_install.sh'
