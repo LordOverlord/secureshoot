@@ -34,7 +34,7 @@ get_calicoctl() {
   VERSION=$(get_latest_release projectcalico/calicoctl)
   LINK="https://github.com/projectcalico/calicoctl/releases/download/${VERSION}/calicoctl-linux-${ARCH}"
   wget "$LINK" -O /tmp/calicoctl && chmod +x /tmp/calicoctl
-  move /tmp/calicoctl /usr/local/bin/calicoctl
+  mv /tmp/calicoctl /usr/local/bin/calicoctl
   echo "Calicoctl downloaded"
 }
 get_ctop
