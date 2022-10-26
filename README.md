@@ -11,9 +11,9 @@
   #####  ######  ####   ####  #    # ######  #####  #    #  ####   ####    #  
 ```
 
-![Main]https://github.com/LordOverlord/secureshoot/actions/workflows/docker-image-main.yml/badge.svg)
+![Main](https://github.com/LordOverlord/secureshoot/actions/workflows/docker-image-main.yml/badge.svg)
 
-![dev]https://github.com/LordOverlord/secureshoot/actions/workflows/docker-image-dev.yml/badge.svg)
+![dev](https://github.com/LordOverlord/secureshoot/actions/workflows/docker-image-dev.yml/badge.svg)
 
 - **Purpose:** Docker and Kubernetes network troubleshooting can become complex. With proper understanding of how Docker and Kubernetes networking works and the right set of tools, you can troubleshoot and resolve these networking issues. The `secureshoot` container has a set of powerful networking tshooting tools that can be used to troubleshoot Docker networking issues. Along with these tools come a set of use-cases that show how this container can be used in real-world scenarios.
 
