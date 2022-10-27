@@ -13,5 +13,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: lordoverlord/secureshoot:dev
+          image: ghcr.io/lordoverlord/secureshoot:dev
           command: monitor
