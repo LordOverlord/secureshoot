@@ -1,5 +1,8 @@
 # Path to your oh-my-bash installation.
 export OSH=~/.oh-my-bash
+# set utf-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 # Set name of the theme to load.
 OSH_THEME="n0qorg"
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
