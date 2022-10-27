@@ -24,11 +24,9 @@ RUN set -ex && \
     # Install oh my bash
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     chmod +x /tmp/*.sh && \
-    /tmp/install_confluent.sh && \
     /tmp/fetch_binaries.sh && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
-    rm /tmp/install_confluent.sh && \
     mv /tmp/.bashrc root/.bashrc
 # Run bash
 CMD ["bash"]

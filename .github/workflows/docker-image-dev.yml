@@ -1,5 +1,4 @@
 name: Image build dev
-
 on:
   push:
     branches: [ "dev" ]
@@ -8,15 +7,12 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  
 jobs:
-
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3 
@@ -41,3 +37,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ghcr.io/lordoverlord/secureshoot:dev
+          command: monitor 
