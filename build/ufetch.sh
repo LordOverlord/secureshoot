@@ -10,7 +10,7 @@ os='Alpine Linux'
 kernel="$(uname -sr)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
 packages="$(apk info | wc -l)"
-shell="$(basename "${SHELL}")"
+shell="$(echo $0)"
 
 ## DEFINE COLORS
 
