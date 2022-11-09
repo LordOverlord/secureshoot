@@ -27,11 +27,11 @@ Cool thing about namespaces is that you can switch between them. You can enter a
 
 * **Container's Network Namespace:** If you're having networking issues with your application's container, you can launch `secureshoot` with that container's network namespace like this:
   
-    `$ docker run -it --net container:<container_name> lordoverlord/secureshoot`
+    `$ docker run -it --net container:<container_name> ghcr.io/lordoverlord/secureshoot:main`
 
 * **Host's Network Namespace:** If you think the networking issue is on the host itself, you can launch `secureshoot` with that host's network namespace:
   
-    `$ docker run -it --net host lordoverlord/secureshoot`
+    `$ docker run -it --net host ghcr.io/lordoverlord/secureshoot:main`
 
 * **Network's Network Namespace:** If you want to troubleshoot a Docker network, you can enter the network's namespace using `nsenter`. This is explained in the `nsenter` section below.
 
@@ -65,11 +65,11 @@ services:
 
 * If you want to spin up a throw away container for debugging.
   
-    `$ kubectl run secureshoot --rm -i --tty --image lordoverlord/secureshoot`
+    `$ kubectl run secureshoot --rm -i --tty --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to spin up a container on the host's network namespace.
   
-    `$ kubectl run secureshoot --rm -i --tty --overrides='{"spec": {"hostNetwork": true}}'  --image lordoverlord/secureshoot`
+    `$ kubectl run secureshoot --rm -i --tty --overrides='{"spec": {"hostNetwork": true}}'  --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to use secureshoot as a sidecar container to troubleshoot your application container
   
