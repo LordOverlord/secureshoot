@@ -9,3 +9,4 @@ get_confluent() {
 }
 get_confluent
 confluent --version
+exit
