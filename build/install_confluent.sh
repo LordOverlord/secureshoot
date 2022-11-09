@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 # Get Binary
 get_confluent() {
@@ -9,4 +9,3 @@ get_confluent() {
 }
 get_confluent
 confluent --version
-exit
