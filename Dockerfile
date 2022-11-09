@@ -29,4 +29,4 @@ RUN set -ex && \
     rm /tmp/fetch_binaries.sh && \
     mv /tmp/.bashrc root/.bashrc
 # Run bash
-CMD ["bash"]
+CMD ["/bin/bash"]
