@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 # Get Binary
 get_kafka() {
   LINK="https://downloads.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz"

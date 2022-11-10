@@ -27,17 +27,17 @@ Cool thing about namespaces is that you can switch between them. You can enter a
 
 * **Container's Network Namespace:** If you're having networking issues with your application's container, you can launch `secureshoot` with that container's network namespace like this:
   
-    `$ docker run -it --net container:<container_name> lordoverlord/secureshoot`
+    `$ docker run --rm -it --tty --net container:<container_name> ghcr.io/lordoverlord/secureshoot:main`
 
 * **Host's Network Namespace:** If you think the networking issue is on the host itself, you can launch `secureshoot` with that host's network namespace:
   
-    `$ docker run -it --net host lordoverlord/secureshoot`
+    `$ docker run --rm -it --tty --net host ghcr.io/lordoverlord/secureshoot:main`
 
 * **Network's Network Namespace:** If you want to troubleshoot a Docker network, you can enter the network's namespace using `nsenter`. This is explained in the `nsenter` section below.
 
 * **Vanilla Docker usage:** If you wanna use it in docker desktop
 
-    `$ docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro -it ghcr.io/lordoverlord/secureshoot:main`
+    `$ docker run --rm -it --tty  --volume /var/run/docker.sock:/var/run/docker.sock:ro -it ghcr.io/lordoverlord/secureshoot:main`
 
 ## SecureShoot with Docker Compose
 
@@ -47,7 +47,7 @@ You can easily deploy `secureshoot` using Docker Compose using something like th
 version: "3.6"
 services:
   tcpdump:
-    image: lordoverlord/secureshoot
+    image: ghcr.io/lordoverlord/secureshoot
     depends_on:
       - nginx
     command: tcpdump -i eth0 -w /data/nginx.pcap
@@ -65,11 +65,11 @@ services:
 
 * If you want to spin up a throw away container for debugging.
   
-    `$ kubectl run secureshoot --rm -i --tty --image lordoverlord/secureshoot`
+    `$ kubectl run secureshoot --rm -it --tty --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to spin up a container on the host's network namespace.
   
-    `$ kubectl run secureshoot --rm -i --tty --overrides='{"spec": {"hostNetwork": true}}'  --image lordoverlord/secureshoot`
+    `$ kubectl run secureshoot --rm -it --tty --overrides='{"spec": {"hostNetwork": true}}'  --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to use secureshoot as a sidecar container to troubleshoot your application container
   
