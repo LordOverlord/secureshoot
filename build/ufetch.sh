@@ -34,10 +34,10 @@ c0="${reset}${blue}"                # first color
 ## OUTPUT
 
 printf "
-${c0}        /\\            ${nc}${USER}${ic}@${nc}${host}${reset}
-${c0}       /  \\           ${lc}OS:        ${ic}${os}${reset}
-${c0}      / /\\ \\  /\\      ${lc}KERNEL:    ${ic}${kernel}${reset}
-${c0}     / /  \\ \\/  \\     ${lc}UPTIME:    ${ic}${uptime}${reset}
+${c0}        /\\               ${nc}${USER}${ic}@${nc}${host}${reset}
+${c0}       /  \\              ${lc}OS:        ${ic}${os}${reset}
+${c0}      / /\\ \\  /\\       ${lc}KERNEL:    ${ic}${kernel}${reset}
+${c0}     / /  \\ \\/  \\      ${lc}UPTIME:    ${ic}${uptime}${reset}
 ${c0}    / /    \\ \\/\\ \\    ${lc}PACKAGES:  ${ic}${packages}${reset}
 ${c0}   / / /|   \\ \\ \\ \\   ${lc}SHELL:     ${ic}${shell}${reset}
 ${c0}  /_/ /_|    \\_\\ \\_\\  
