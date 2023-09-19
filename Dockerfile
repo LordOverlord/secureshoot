@@ -29,7 +29,6 @@ RUN set -ex && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
     mv /tmp/.bashrc root/.bashrc &&\
-    pip3 install psycopg2 && \
-    pip3 install typing-extensions
+    pip3 install psycopg2 typing-extensions
 # Run bash
 CMD ["/bin/bash"]
