@@ -9,24 +9,26 @@ RUN set -ex && \
     bash \ 
     busybox-extras \
     curl \
-    drill \
     file \
     iftop \
     iperf3 \
     jq \
-    mtr \
     openssl \
-    speedtest-cli \
     openssh \
     git \
-    nano \
-    htop && \
+    pgcli \
+    py3-pip \
+    build-base \
+    postgresql-dev \
+    python3-dev\
+    nano && \
     # Install oh my bash
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     chmod +x /tmp/*.sh && \
     /tmp/fetch_binaries.sh && \
     # cleanup 
     rm /tmp/fetch_binaries.sh && \
-    mv /tmp/.bashrc root/.bashrc
+    mv /tmp/.bashrc root/.bashrc &&\
+    pip3 install psycopg2
 # Run bash
 CMD ["/bin/bash"]
