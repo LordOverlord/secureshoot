@@ -6,7 +6,7 @@ RUN set -ex && \
     apk update && \
     apk upgrade && \
     apk add --no-cache \
-    bash \ 
+    bash \
     busybox-extras \
     curl \
     drill \
@@ -25,7 +25,7 @@ RUN set -ex && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     chmod +x /tmp/*.sh && \
     /tmp/fetch_binaries.sh && \
-    # cleanup 
+    # cleanup
     rm /tmp/fetch_binaries.sh && \
     mv /tmp/.bashrc root/.bashrc
 # Run bash
