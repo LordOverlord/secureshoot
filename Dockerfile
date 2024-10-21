@@ -1,6 +1,10 @@
 FROM alpine:latest
+
+# Copy build scripts to /tmp
 COPY build/ /tmp/
+
 RUN set -ex && \
+    # Install necessary packages
     apk add --no-cache ca-certificates && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     apk update && \
@@ -20,13 +24,24 @@ RUN set -ex && \
     openssh \
     git \
     nano \
+    dos2unix \
     htop && \
-    # Install oh my bash
+    # Install Oh My Bash
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
-    chmod +x /tmp/*.sh && \
-    /tmp/fetch_binaries.sh && \
-    # cleanup
+    # Check if fetch_binaries.sh exists and is executable
+    ls -l /tmp/ && \
+    if [ -f /tmp/fetch_binaries.sh ]; then \
+        dos2unix /tmp/fetch_binaries.sh; \
+        echo "fetch_binaries.sh exists"; \
+        chmod +x /tmp/fetch_binaries.sh; \
+        bash /tmp/fetch_binaries.sh; \
+    else \
+        echo "fetch_binaries.sh not found"; \
+        exit 1; \
+    fi && \
+    # Cleanup after execution
     rm /tmp/fetch_binaries.sh && \
     mv /tmp/.bashrc root/.bashrc
-# Run bash
+
+# Run bash by default
 CMD ["/bin/bash"]
