@@ -24,6 +24,20 @@ spec:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+            runAsUser: 10001
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "curl -f http://localhost/ || exit 1"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
         - name: secureshoot
           image: lordoverlord/secureshoot
           imagePullPolicy: Always
@@ -33,3 +47,17 @@ spec:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
             readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+            runAsUser: 10001
+          livenessProbe:
+             exec:
+              command:
+                - /bin/sh
+                - -c
+                - "curl -f http://localhost/ || exit 1"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
