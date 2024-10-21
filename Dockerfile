@@ -1,4 +1,4 @@
-FROM alpine:3.20.3
+FROM alpine:latest
 COPY build/ /tmp/
 RUN set -ex && \
     apk add --no-cache ca-certificates && \
