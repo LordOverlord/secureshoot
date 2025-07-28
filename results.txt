@@ -1,0 +1,630 @@
+
+Report Summary
+
+┌──────────────────────────────────┬────────────┬─────────────────┬───────────────────┬─────────┐
+│              Target              │    Type    │ Vulnerabilities │ Misconfigurations │ Secrets │
+├──────────────────────────────────┼────────────┼─────────────────┼───────────────────┼─────────┤
+│ Dockerfile                       │ dockerfile │        -        │         3         │    -    │
+├──────────────────────────────────┼────────────┼─────────────────┼───────────────────┼─────────┤
+│ configs/secureshoot-calico.yaml  │ kubernetes │        -        │        12         │    -    │
+├──────────────────────────────────┼────────────┼─────────────────┼───────────────────┼─────────┤
+│ configs/secureshoot-sidecar.yaml │ kubernetes │        -        │        16         │    -    │
+└──────────────────────────────────┴────────────┴─────────────────┴───────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+Dockerfile (dockerfile)
+=======================
+Tests: 27 (SUCCESSES: 24, FAILURES: 3)
+Failures: 3 (UNKNOWN: 0, LOW: 1, MEDIUM: 1, HIGH: 1, CRITICAL: 0)
+
+AVD-DS-0001 (MEDIUM): Specify a tag in the 'FROM' statement for image 'alpine'
+════════════════════════════════════════
+When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.
+
+See https://avd.aquasec.com/misconfig/ds001
+────────────────────────────────────────
+ Dockerfile:1
+────────────────────────────────────────
+   1 [ FROM alpine:latest
+────────────────────────────────────────
+
+
+AVD-DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds002
+────────────────────────────────────────
+
+
+AVD-DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds026
+────────────────────────────────────────
+
+
+
+configs/secureshoot-calico.yaml (kubernetes)
+============================================
+Tests: 95 (SUCCESSES: 83, FAILURES: 12)
+Failures: 12 (UNKNOWN: 0, LOW: 5, MEDIUM: 5, HIGH: 2, CRITICAL: 0)
+
+AVD-KSV-0009 (HIGH): Deployment 'secureshoot-calico-deploy' should not set 'spec.template.spec.hostNetwork' to true
+════════════════════════════════════════
+Sharing the host’s network namespace permits processes in the pod to communicate with processes bound to the host’s loopback adapter.
+
+See https://avd.aquasec.com/misconfig/ksv009
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:11-82
+────────────────────────────────────────
+  11 ┌   selector:
+  12 │     matchLabels:
+  13 │       app: secureshoot
+  14 │   strategy:
+  15 │     type: Recreate
+  16 │   template:
+  17 │     metadata:
+  18 │       labels:
+  19 └         app: secureshoot
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0013 (MEDIUM): Container 'secureshoot' of Deployment 'secureshoot-calico-deploy' should specify an image tag
+════════════════════════════════════════
+It is best to avoid using the ':latest' image tag when deploying containers in production. Doing so makes it hard to track which version of the image is running, and hard to roll back the version.
+
+See https://avd.aquasec.com/misconfig/ksv013
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0015 (LOW): Container 'secureshoot' of Deployment 'secureshoot-calico-deploy' should set 'resources.requests.cpu'
+════════════════════════════════════════
+When containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv015
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0016 (LOW): Container 'secureshoot' of Deployment 'secureshoot-calico-deploy' should set 'resources.requests.memory'
+════════════════════════════════════════
+When containers have memory requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv016
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0020 (LOW): Container 'secureshoot' of Deployment 'secureshoot-calico-deploy' should set 'securityContext.runAsUser' > 10000
+════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv020
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0021 (LOW): Container 'secureshoot' of Deployment 'secureshoot-calico-deploy' should set 'securityContext.runAsGroup' > 10000
+════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv021
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0023 (MEDIUM): Deployment 'secureshoot-calico-deploy' should not set 'spec.template.volumes.hostPath'
+════════════════════════════════════════
+According to pod security standard 'HostPath Volumes', HostPath volumes must be forbidden.
+
+See https://avd.aquasec.com/misconfig/ksv023
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:11-82
+────────────────────────────────────────
+  11 ┌   selector:
+  12 │     matchLabels:
+  13 │       app: secureshoot
+  14 │   strategy:
+  15 │     type: Recreate
+  16 │   template:
+  17 │     metadata:
+  18 │       labels:
+  19 └         app: secureshoot
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv030
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0037 (MEDIUM): Deployment 'secureshoot-calico-deploy' should not be set with 'kube-system' namespace
+════════════════════════════════════════
+ensure that user resources are not placed in kube-system namespace
+
+See https://avd.aquasec.com/misconfig/no-user-pods-in-system-namespace
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:11-82
+────────────────────────────────────────
+  11 ┌   selector:
+  12 │     matchLabels:
+  13 │       app: secureshoot
+  14 │   strategy:
+  15 │     type: Recreate
+  16 │   template:
+  17 │     metadata:
+  18 │       labels:
+  19 └         app: secureshoot
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0104 (MEDIUM): container "secureshoot" of deployment "secureshoot-calico-deploy" in "kube-system" namespace should specify a seccomp profile
+════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv104
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0118 (HIGH): deployment secureshoot-calico-deploy in kube-system namespace is using the default security context, which allows root privileges
+════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv118
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:21-82
+────────────────────────────────────────
+  21 ┌       serviceAccount: cni-plugin
+  22 │       serviceAccountName: cni-plugin
+  23 │       hostNetwork: true
+  24 │       containers:
+  25 │       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 └         livenessProbe:
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0125 (MEDIUM): Container secureshoot in deployment secureshoot-calico-deploy (namespace: kube-system) uses an image from an untrusted registry.
+════════════════════════════════════════
+Ensure that all containers use images only from trusted registry domains.
+
+See https://avd.aquasec.com/misconfig/ksv0125
+────────────────────────────────────────
+ configs/secureshoot-calico.yaml:25-72
+────────────────────────────────────────
+  25 ┌       - image: lordoverlord/secureshoot
+  26 │         imagePullPolicy: Always
+  27 │         name: secureshoot
+  28 │         command: ["ping","localhost"]
+  29 │         livenessProbe:
+  30 │           exec:
+  31 │             command:
+  32 │             - /bin/ping
+  33 └             - -c
+  ..   
+────────────────────────────────────────
+
+
+
+configs/secureshoot-sidecar.yaml (kubernetes)
+=============================================
+Tests: 101 (SUCCESSES: 85, FAILURES: 16)
+Failures: 16 (UNKNOWN: 0, LOW: 9, MEDIUM: 6, HIGH: 1, CRITICAL: 0)
+
+AVD-KSV-0013 (MEDIUM): Container 'nginx' of Deployment 'nginx-secureshoot' should specify an image tag
+════════════════════════════════════════
+It is best to avoid using the ':latest' image tag when deploying containers in production. Doing so makes it hard to track which version of the image is running, and hard to roll back the version.
+
+See https://avd.aquasec.com/misconfig/ksv013
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0013 (MEDIUM): Container 'secureshoot' of Deployment 'nginx-secureshoot' should specify an image tag
+════════════════════════════════════════
+It is best to avoid using the ':latest' image tag when deploying containers in production. Doing so makes it hard to track which version of the image is running, and hard to roll back the version.
+
+See https://avd.aquasec.com/misconfig/ksv013
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0015 (LOW): Container 'nginx' of Deployment 'nginx-secureshoot' should set 'resources.requests.cpu'
+════════════════════════════════════════
+When containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv015
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0015 (LOW): Container 'secureshoot' of Deployment 'nginx-secureshoot' should set 'resources.requests.cpu'
+════════════════════════════════════════
+When containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv015
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0016 (LOW): Container 'nginx' of Deployment 'nginx-secureshoot' should set 'resources.requests.memory'
+════════════════════════════════════════
+When containers have memory requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv016
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0016 (LOW): Container 'secureshoot' of Deployment 'nginx-secureshoot' should set 'resources.requests.memory'
+════════════════════════════════════════
+When containers have memory requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv016
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0021 (LOW): Container 'nginx' of Deployment 'nginx-secureshoot' should set 'securityContext.runAsGroup' > 10000
+════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv021
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0021 (LOW): Container 'secureshoot' of Deployment 'nginx-secureshoot' should set 'securityContext.runAsGroup' > 10000
+════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv021
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv030
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv030
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0104 (MEDIUM): container "nginx" of deployment "nginx-secureshoot" in "default" namespace should specify a seccomp profile
+════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv104
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:18-40
+────────────────────────────────────────
+  18 ┌         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 │             runAsNonRoot: true
+  26 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0104 (MEDIUM): container "secureshoot" of deployment "nginx-secureshoot" in "default" namespace should specify a seccomp profile
+════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv104
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0110 (LOW): deployment nginx-secureshoot in default namespace should set metadata.namespace to a non-default namespace
+════════════════════════════════════════
+Checks whether a workload is running in the default namespace.
+
+See https://avd.aquasec.com/misconfig/ksv110
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:4-6
+────────────────────────────────────────
+   4 ┌     name: nginx-secureshoot
+   5 │     labels:
+   6 └         app: nginx-secureshoot
+────────────────────────────────────────
+
+
+AVD-KSV-0117 (MEDIUM): deployment nginx-secureshoot in default namespace should not set spec.template.spec.containers.ports.containerPort to less than 1024
+════════════════════════════════════════
+The ports which are lower than 1024 receive and transmit various sensitive and privileged data. Allowing containers to use them can bring serious implications.
+
+See https://avd.aquasec.com/misconfig/ksv117
+────────────────────────────────────────
+
+
+AVD-KSV-0118 (HIGH): deployment nginx-secureshoot in default namespace is using the default security context, which allows root privileges
+════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv118
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:17-63
+────────────────────────────────────────
+  17 ┌         containers:
+  18 │         - name: nginx
+  19 │           image: nginx:latest
+  20 │           imagePullPolicy: Always
+  21 │           ports:
+  22 │             - containerPort: 80
+  23 │           securityContext:
+  24 │             allowPrivilegeEscalation: false
+  25 └             runAsNonRoot: true
+  ..   
+────────────────────────────────────────
+
+
+AVD-KSV-0125 (MEDIUM): Container secureshoot in deployment nginx-secureshoot (namespace: default) uses an image from an untrusted registry.
+════════════════════════════════════════
+Ensure that all containers use images only from trusted registry domains.
+
+See https://avd.aquasec.com/misconfig/ksv0125
+────────────────────────────────────────
+ configs/secureshoot-sidecar.yaml:41-63
+────────────────────────────────────────
+  41 ┌         - name: secureshoot
+  42 │           image: lordoverlord/secureshoot
+  43 │           imagePullPolicy: Always
+  44 │           command: ["/bin/bash"]
+  45 │           args: ["-c", "while true; do ping localhost; sleep 60;done"]
+  46 │           securityContext:
+  47 │             allowPrivilegeEscalation: false
+  48 │             runAsNonRoot: true
+  49 └             readOnlyRootFilesystem: true
+  ..   
+────────────────────────────────────────
+
+
