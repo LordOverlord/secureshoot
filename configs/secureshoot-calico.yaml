@@ -26,10 +26,23 @@ spec:
         imagePullPolicy: Always
         name: secureshoot
         command: ["ping","localhost"]
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ping
+            - -c
+            - "1"
+            - localhost
+          initialDelaySeconds: 10
+          periodSeconds: 10
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
           readOnlyRootFilesystem: true
+          runAsUser: 10000
+          capabilities :
+            drop:
+              - ALL
         volumeMounts:
         - mountPath: /calico-secrets
           name: etcd-certs
@@ -53,6 +66,10 @@ spec:
             configMapKeyRef:
               key: etcd_cert
               name: calico-config
+        resources:
+          limits:
+            cpu: 100m
+            memory: 50Mi
       volumes:
         - name: etcd-certs
           secret:

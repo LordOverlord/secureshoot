@@ -23,8 +23,8 @@ get_latest_release() {
 #Get ctop function
 get_ctop() {
   echo "Getting ctop"
-  VERSION=$(get_latest_release bcicen/ctop | sed -e 's/^v//')
-  LINK="https://github.com/bcicen/ctop/releases/download/v${VERSION}/ctop-${VERSION}-linux-${ARCH}"
+  VERSION=$(get_latest_release lordoverlord/ctop | sed -e 's/^v//')
+  LINK="https://github.com/lordoverlord/ctop/releases/download/v${VERSION}/ctop-linux-${ARCH}"
   wget "$LINK" -O /tmp/ctop && chmod +x /tmp/ctop
   mv /tmp/ctop /usr/local/bin/ctop
   echo "Ctop downloaded"
