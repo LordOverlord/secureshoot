@@ -42,13 +42,11 @@ Cool thing about namespaces is that you can switch between them. You can enter a
 You can easily deploy `secureshoot` using Docker Compose using something like this:
 
 ```
-version: "3.6"
 services:
   tcpdump:
     image: ghcr.io/lordoverlord/secureshoot
     depends_on:
       - nginx
-    command: tcpdump -i eth0 -w /data/nginx.pcap
     network_mode: service:nginx
     volumes:
       - $PWD/data:/data
@@ -62,15 +60,15 @@ services:
 ## SecureShoot with Kubernetes
 
 * If you want to spin up a throw away container for debugging.
-  
+
     `$ kubectl run secureshoot --rm -it --tty --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to spin up a container on the host's network namespace.
-  
+
     `$ kubectl run secureshoot --rm -it --tty --overrides='{"spec": {"hostNetwork": true}}'  --image ghcr.io/lordoverlord/secureshoot:main`
 
 * if you want to use secureshoot as a sidecar container to troubleshoot your application container
-  
+
   ```
     $ cat secureshoot-sidecar.yaml
     apiVersion: apps/v1
@@ -98,28 +96,28 @@ services:
           secureshoot lordoverlord/netshoot
             command: ["/bin/bash"]
             args: ["-c", "while true; do ping localhost; sleep 60;done"]
-  
+
   secureshootctl apply -f netshoot-sidecar.yaml
     secureshootment.apps/nginx-secureshoot created
-  
+
     $ kubectl get pod
   NAME                              READY   STATsecureshootSTARTS   AGE
   nginx-netshoot-7f9c6957f8-kr8q6   2/2     Running   0          4m27
-  
+
   $kubectl exec -it ngsecureshoothoot-7f9c6957f8-kr8q6 -c netshoot -- /bin/bash
 
-    nginx-secureshoot-7f9c6957f8-kr8q6 $ 
+    nginx-secureshoot-7f9c6957f8-kr8q6 $
 
 '''
 
-**Network Problems** 
+**Network Problems**
 
 Many network issues could result in application performance degradation. Some of those issues could be related to the underlying networking infrastructure(underlay). Others could be related to misconfiguration at the host or Docker level. Let's take a look at common networking issues:
 
 * latency
-* routing 
+* routing
 * DNS resolution
-* firewall 
+* firewall
 * incomplete ARPs
 
 To troubleshoot these issues, `secureshoot` includes a set of powerful tools as recommended by this diagram. 
@@ -131,21 +129,23 @@ To troubleshoot these issues, `secureshoot` includes a set of powerful tools as 
 
 ```
 bash
-   busybox-extras
-   curl
-   drill
-   file
-   iftop
-   iperf3
-   jq
-   mtr
-   openjdk11
-   openssl
-   tcptraceroute
-   git
-   htop
-   kafka
-   confluent
+  bash
+  busybox-extras
+  curl
+  drill
+  file
+  iftop
+  iperf3
+  jq
+  mtr
+  openssl
+  speedtest-cli
+  tcpdump
+  tcptraceroute
+  git
+  htop
+  kafka
+  confluent
 ```
 
 ## **Sample Use-cases** 

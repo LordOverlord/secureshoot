@@ -20,6 +20,8 @@ RUN set -ex && \
     openssl \
     speedtest-cli \
     openssh \
+    tcpdump \
+    tcptraceroute \
     git \
     nano \
     dos2unix \

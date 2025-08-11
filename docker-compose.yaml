@@ -1,0 +1,13 @@
+services:
+  tcpdump:
+    image: ghcr.io/lordoverlord/secureshoot
+    depends_on:
+      - nginx
+    network_mode: service:nginx
+    volumes:
+      - $PWD/data:/data
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
