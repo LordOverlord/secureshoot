@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.23.3
 COPY build/ /tmp/
 
 RUN set -ex && \
